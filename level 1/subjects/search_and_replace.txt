@@ -1,0 +1,23 @@
+Assignment name  : search_and_replace
+Expected files   : search_and_replace.c
+Allowed functions: write
+--------------------------------------------------------------------------------
+
+Write a program that takes 3 arguments, the first arguments is a string in
+which to replace a letter (2nd argument) by another one (3rd argument).
+
+If the number of arguments is not 3, just display a newline.
+
+If the second argument is not contained in the first one (the string), then the
+program displays the string unchanged followed by a newline.
+
+Examples:
+
+$> ./search_and_replace "Pucho En El Club" "o" "a" | cat -e
+Pacha En El Clab$
+$> ./search_and_replace "No_gills_no_glory" "X" "f" | cat -e
+No_gills_no_glory$
+$> ./search_and_replace "bravoure" "a" "a" | cat -e
+bravoure$
+$> ./search_and_replace | cat -e
+$

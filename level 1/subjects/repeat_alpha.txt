@@ -1,0 +1,29 @@
+Assignment name  : repeat_alpha
+Expected files   : repeat_alpha.c
+Allowed functions: write
+--------------------------------------------------------------------------------
+
+Write a program that takes a string and displays it, repeating each character
+the number of times it's necessary.
+
+If a character is 'a' or 'A', it must be displayed 1 time.
+If a character is 'b' or 'B', it must be displayed 2 times.
+If a character is 'c' or 'C', it must be displayed 3 times.
+...
+If a character is 'z' or 'Z', it must be displayed 26 times.
+
+Case must remain unchanged.
+
+If the number of arguments is not 1, just display a newline.
+
+Examples:
+
+$> ./repeat_alpha "abc"
+abbccc
+$> ./repeat_alpha "Alex." | cat -e
+Alllllllllllleeeeeeeeeeeexxxxxxxxxxxxxxxxxxxxxxxx.$
+$> ./repeat_alpha "abDd" | cat -e
+abbDdddd$
+$> ./repeat_alpha | cat -e
+$
+$>

@@ -1,0 +1,21 @@
+Assignment name  : ulstr
+Expected files   : ulstr.c
+Allowed functions: write
+--------------------------------------------------------------------------------
+
+Write a program that takes a string and reverses the case of all its letters.
+Other characters remain unchanged.
+
+You must display the result followed by a newline.
+
+If the number of arguments is not 1, the program displays a newline.
+
+Examples:
+
+$> ./ulstr "L'eSpRiT dE l'EsCaLiEr" | cat -e
+l'EsPrIt De L'eScAlIeR$
+$> ./ulstr "Formula 1 - Our Williams Helix Base" | cat -e
+fORMULA 1 - oUR wILLIAMS hELIX bASE$
+$> ./ulstr | cat -e
+$
+$>

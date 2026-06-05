@@ -1,0 +1,26 @@
+Assignment name  : rotone
+Expected files   : rotone.c
+Allowed functions: write
+--------------------------------------------------------------------------------
+
+Write a program that takes a string and displays it, replacing each of its
+letters by the next one in alphabetical order.
+
+'z' becomes 'a' and 'Z' becomes 'A'.
+The case remains unaffected.
+
+The output will be followed by a newline.
+
+If the number of arguments is not 1, the program displays a newline.
+
+Examples:
+
+$> ./rotone "abc"
+bcd
+$> ./rotone "Les Blues Belges"
+Mft Cmvft Cfmhft
+$> ./rotone "Akaza fwa 8 Dudley"
+Blbab gxb 8 Evemfz
+$> ./rotone | cat -e
+$
+$>

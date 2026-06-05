@@ -1,0 +1,26 @@
+Assignment name  : rot_13
+Expected files   : rot_13.c
+Allowed functions: write
+--------------------------------------------------------------------------------
+
+Write a program that takes a string and displays it, replacing each of its
+letters by the next one in alphabetical order, 13 positions further.
+
+'z' becomes 'm' and 'Z' becomes 'M'.
+The case remains unaffected.
+
+The output will be followed by a newline.
+
+If the number of arguments is not 1, the program displays a newline.
+
+Examples:
+
+$> ./rot_13 "abc"
+nop
+$> ./rot_13 "My horse is Amazing." | cat -e
+Zl ubefs vf Nznmvat.$
+$> ./rot_13 "Akaza fwa 8 Dudley" | cat -e
+Nxnmn sjn 8 Qhqyrl$
+$> ./rot_13 | cat -e
+$
+$>
