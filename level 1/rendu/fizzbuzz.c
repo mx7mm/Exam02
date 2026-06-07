@@ -1,21 +1,10 @@
-#include <unistd.h>
-
-void ft_putnbr(int num)
-{
-	char digit;
-	if(num >= 10)
-		ft_putnbr(num / 10);
-	digit = (num % 10) + '0';
-	write(1, &digit, 1);
-}
-
+#include <unistd.h>						
 int main(void)
 {
 	int i;
 
-	i = 1;
-
-	while(i <= 100)
+	i = 0;
+	while(++i <= 100)
 	{
 		if(i % 3 == 0 && i % 5 == 0)
 			write(1, "fizzbuzz", 8);
@@ -24,9 +13,12 @@ int main(void)
 		else if(i % 5 == 0)
 			write(1, "buzz", 4);
 		else
-			ft_putnbr(i);
+			{
+				if(i >= 10)
+					write(1, &"0123456789"[i / 10], 1);
+				write(1, &"0123456789"[i % 10], 1);
+			}
 		write(1, "\n", 1);
-		i++;
 	}
 	return 0;
 }
