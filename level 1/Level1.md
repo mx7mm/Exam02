@@ -1,41 +1,67 @@
-# 42 Exam Rank 02 - Level 1 Roadmap
+# Technical Reference Manual: Exam Rank 02 — Level 1 Core Curriculum
 
-Dieses Dokument enthält alle potenziellen Aufgaben aus dem Pool von **Level 1** im *Common Core* des 42-Netzwerks sowie die exakten Fähigkeiten, die du für jede Aufgabe beherrschen musst.
-
----
-
-## Grundlegende Kernkompetenzen für Level 1
-
-Um dieses Level mit 100/100 Punkten zu bestehen, musst du im Schlaf beherrschen:
-1. **Das `argv`-Prinzip:** Sicheres Navigieren durch ein zweidimensionales Array (`argv[1][i]`), ohne Speicherfehler (*Segmentation Faults*) zu verursachen.
-2. **Die ASCII-Mathematik:** Wissen, dass `'A' = 65`, `'a' = 97` und der Abstand dazwischen exakt `32` beträgt.
-3. **Der Kontrollfluss:** Der bewusste Einsatz von `if`, `else if` und `else`, um unkontrollierte Kettenreaktionen im Speicher zu verhindern.
-4. **Whitespaces filtern:** Leerzeichen (`' '`) und Tabulatoren (`'\t'`) gezielt als Trenner oder Überspring-Signal nutzen.
+This repository serves as a production-grade academic blueprint and comprehensive technical engineering guide for mastering Level 1 of the 42 School Exam Rank 02 syllabus. It details programmatic strategies, memory protection methodologies, and systemic edge-case patterns required to achieve an absolute 100/100 score under the strict conditions of the automated grading system (Moulinette).
 
 ---
 
-## Aufgabenübersicht & Anforderungen
+## Core Technical Competencies
+
+Successful verification requires flawless execution of fundamental low-level principles, with particular emphasis on preventing memory access violations (`Segmentation Faults`):
+
+* **Multidimensional Pointer Navigation:** Safe parsing of command-line arrays (`argv`) using conditional bounds checking to guarantee isolation from unallocated stack sectors.
+* **ASCII Value Engineering:** Optimization of logic architectures based on character byte sequences (e.g., `'A' = 65`, `'a' = 97`), capitalizing on the continuous `32`-byte offset for localized type conversions.
+* **Predictable Control Flows:** Strict implementation of explicit `if` / `else if` deterministic paths to entirely eliminate undefined logical execution or overlapping instruction states.
+* **Tokenization Mechanics:** Systematic detection and filtering of structural layout elements, such as space blocks (`' '`) and horizontal delimiters (`'\t'`), for character grouping and parsing.
+
+---
+
+## Syllabus & Architectural Matrix
 
 
-| Aufgabenname | Typ | Was das Programm tun muss | Das musst du dafür können |
+
+| Module Identifier | Compilation Type | Execution Specification | Core Algorithmic Focus |
 | :--- | :--- | :--- | :--- |
-| **`fizzbuzz`** | Programm | Zählt von 1 bis 100. Ersetzt Vielfache von 3 durch "fizz", von 5 durch "buzz", von beiden durch "fizzbuzz". | Mathematische Zerlegung von Zahlen (`/ 10` und `% 10`) für eine eigene Druckfunktion (`putnbr`), da `printf` verboten ist. Modulo-Hierarchie beachten. |
-| **`first_word`** | Programm | Erhält einen String und gibt ausschließlich das allererste echte Wort aus, gefolgt von einem `\n`. | **Whitespaces überspringen:** Eine `while`-Schleife bauen, die am Anfang alle Leerzeichen/Tabs ignoriert, das Wort druckt und beim nächsten Leerzeichen sofort stoppt. |
-| **`last_word`** | Programm | Erhält einen String und gibt ausschließlich das allerletzte Wort aus. | **Rückwärts-Navigation:** Entweder den String bis zum `\0` ablaufen und von dort rückwärts das Wort fixieren, oder Whitespaces am String-Ende gezielt ignorieren. |
-| **`rev_print`** | Programm | Gibt einen im Terminal übergebenen String komplett rückwärts aus. | **Längenmessung & Dekrementierung:** Erst das String-Ende finden, dann den Index-Zähler mittels `i--` rückwärts bis zur Position 0 laufen lassen. |
-| **`rotone`** | Programm | Verschiebt jeden Buchstaben um 1 Position im Alphabet nach vorne (`a` ➔ `b`, `z` ➔ `a`). Fallhöhe bleibt gleich. | **Gezielte Ausnahmen:** `else if`-Weichen für die Endbuchstaben `z` und `Z` einbauen, damit sie wieder auf `a` bzw. `A` zurückgesetzt werden. |
-| **`rot_13`** | Programm | Verschiebt jeden Buchstaben um 13 Positionen nach vorne (rotiert das halbe Alphabet). | **Halbierungs-Logik:** Das Alphabet gedanklich in der Mitte teilen (`m`/`M`). Bis dorthin `+13` rechnen, ab dort `-13` rechnen, um den Überlauf abzufangen. |
-| **`ulstr`** | Programm | Invertiert die Groß- und Kleinschreibung eines Strings. Alle anderen Zeichen bleiben unberührt. | **ASCII-Verschiebung:** Buchstabenbereiche abgrenzen und den magischen Wert von `32` addieren (wird klein) oder subtrahieren (wird groß). |
-| **`repeat_alpha`** | Programm | Gibt jeden Buchstaben so oft aus, wie es seiner Position im Alphabet entspricht (`a` = 1-mal, `c` = 3-mal). | **Dynamische Schleifen:** Die Anzahl der inneren Schleifendurchläufe live aus dem ASCII-Wert berechnen (`c - 'a' + 1` oder `c - 'A' + 1`). |
-| **`search_and_replace`** | Programm | Ersetzt in einem String (Argument 1) alle Vorkommen eines Zeichens (Argument 2) durch ein anderes (Argument 3). | **Multi-Argument-Handling:** Den Sicherheitscheck zwingend auf `argc == 4` anheben und Zeichen gezielt in einer Schleife austauschen. |
-| **`ft_strlen`** | Funktion | Gibt die Länge eines übergebenen Strings als Zahl (`int`) zurück. | **Zähler-Schleife:** Eine einfache Funktion schreiben, die beim Null-Terminator (`\0`) anhält und den erreichten Index zurückgibt. |
-| **`ft_strcpy`** | Funktion | Kopiert den Inhalt eines Quell-Strings in einen Ziel-String. | **Pointer-Zuweisung:** Zeichen für Zeichen übertragen und am Ende das lebenswichtige `\0`-Zeichen manuell am Ziel-String setzen. |
-| **`ft_swap`** | Funktion | Vertauscht die Werte von zwei Integer-Variablen mithilfe ihrer Speicheradressen. | **Pointer-Dereferenzierung:** Der sichere Umgang mit Zeigern (`*a` und `*b`) und das Verwenden einer temporären Zwischenvariable (`int tmp`). |
-| **`ft_putstr`** | Funktion | Gibt einen übergebenen String auf dem Bildschirm aus. | **Basis-Schleife:** Die absolute Standard-Übung. Eine `while`-Schleife mit `write(1, &str[i], 1)` bis zum String-Ende steuern. |
+| **`fizzbuzz`** | Standalone Binary | Sequential evaluation of integers `1` through `100` mapping specific mathematical conditions to string stream outputs. | Numeric modulo decomposition (`/ 10`, `% 10`) for localized output generation. Enforces strict compliance by using low-level kernel streams (`write`). |
+| **`first_word`** | Standalone Binary | Isolation and streaming of the primary word sequence within a continuous character stream. | **Forward-skipping logic:** Pointer advancement bypassing leading whitespace tokens with real-time word boundary termination. |
+| **`last_word`** | Standalone Binary | Detection, isolation, and output generation of the terminal word within a string stream. | **Reverse-navigation parsing:** String tail tracking via explicit length calculation, backward whitespace truncation, and base-index anchoring. |
+| **`rev_print`** | Standalone Binary | Direct byte-order reversal of a command-line parameter array via standard output. | **String tail evaluation:** Traversal to the null terminator followed by controlled reverse iteration loops utilizing negative pointer offsets (`i--`). |
+| **`rotone`** | Standalone Binary | Shift-cipher mutation advancing all alphabetical bytes by exactly `+1` structural position while maintaining structural casing. | **Overflow boundaries:** Implementation of explicit wrapping exceptions to safely loop boundary bytes (`z` / `Z`) back to their origins (`a` / `A`). |
+| **`rot_13`** | Standalone Binary | Implementation of the symmetric ROT13 cipher, executing a half-alphabet rotation (`+13` / `-13`). | **Midpoint split-logic:** Bisecting alphabetic boundaries (`m` / `M`) to isolate addition phases from subtraction phases, eliminating byte overflows. |
+| **`ulstr`** | Standalone Binary | Universal case inversion across alphabetical characters. All non-alphabetical bytes must remain fully immutable. | **Offset mathematics:** Boundary restriction logic isolating specific ASCII zones to apply deterministic arithmetic adjustments via the `32`-byte constant. |
+| **`repeat_alpha`** | Standalone Binary | Dynamic amplification of individual bytes based on their one-indexed alphabetical ranking position. | **Nested sequence loops:** Run-time calculation of internal iterator depth through relative ASCII distance formulas (`character - base_offset + 1`). |
+| **`search_and_replace`** | Standalone Binary | Target-byte scanning within a multi-byte array, executing immediate atomic replacements. | **Strict argument constraints:** Mandatory verification layers validating exactly `argc == 4` prior to performing down-stream pointer operations. |
+| **`ft_strlen`** | Isolated Function | Run-time evaluation and reporting of string memory dimensions (`int`). | **Null-terminator detection:** Linear sequential scanning loops optimized to halt precisely upon reaching the terminal `\0` marker. |
+| **`ft_strcpy`** | Isolated Function | Block memory replication transferring byte sequences from a source origin to a destination array buffer. | **Buffer stabilization:** Explicit terminal assignment appending the vital `\0` null byte directly to the destination array structure post-transfer. |
+| **`ft_swap`** | Isolated Function | In-place memory value translation between two independent stack storage regions. | **Pass-by-reference mechanics:** Manipulation of pointer addresses (`*a`, `*b`) paired with a primitive temporary variable to handle resource swapping safely. |
+| **`ft_putstr`** | Isolated Function | Character-stream writing targeting standard output via low-level kernel routines. | **System call optimization:** Sequential text routing driven by pointer-based address reads executing `write(1, &str[i], 1)`. |
 
 ---
 
-## Goldene Prüfungsregeln für Level 1
-* Wenn die Anzahl der Argumente (`argc`) nicht exakt der Vorgabe entspricht, darf das Programm **nur einen Zeilenumbruch (`\n`)** ausgeben.
-* Funktionen (alle Aufgaben mit `ft_` am Anfang) benötigen **keine** eigene `main`-Funktion bei der Abgabe! Du gibst dort nur die reine Logik ab.
-* Kompiliere im Terminal immer mit `-Wall -Wextra -Werror`, um versteckte Fehler (wie ungenutzte Variablen oder falsche Typen) sofort zu sehen.
+## Evaluation Architecture and Execution Constraints
+
+### The Standalone Program Interface
+All standalone binary applications must be written defensively. If the incoming parameter matrix array does not align perfectly with the target specification criteria (invalid `argc`), the application layer must gracefully default to issuing a clean single newline character (`\n`) and terminate execution with exit status code `0`.
+
+### The Pure Function Interface
+Source files utilizing the `ft_` namespace function as isolated modular elements within larger frameworks. **Do not embed a local `main` execution routine** within the final submitted artifact. All validation layers must be handled separately or fully stripped prior to compilation tracking.
+
+### Mandatory Compilation Parameters
+Local compilation routines must enforce absolute type enforcement and logical validation by incorporating strict diagnostic flags:
+
+```bash
+gcc -Wall -Wextra -Werror <source_file>.c -o <binary_output>
+```
+
+---
+
+## Technical Verification Framework
+
+To diagnose data pipelines, handle trailing spatial elements, and detect invisible anomalies, execute all local verification routines in conjunction with a visual delimiter extension (`cat -e`):
+
+```bash
+# Executing complex structural whitespace evaluation
+./last_word "  consecutive string block  " | cat -e
+
+# Expected System Return Structure:
+block\$
+```
