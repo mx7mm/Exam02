@@ -1,6 +1,6 @@
-# Code Explanation: Extract the First Word of a String
+# Code Explanation: Extract the Last Word of a String
 
-This C program filters and prints the **first word** from a given string. It automatically skips any leading spaces or tabs and outputs just the first continuous sequence of characters.
+This C program processes a single string passed as a command-line argument and prints its **very last word**. Instead of starting from the beginning, the program moves a pointer all the way to the end of the string and then backtracks to isolate the final word.
 
 ---
 
@@ -11,16 +11,17 @@ This C program filters and prints the **first word** from a given string. It aut
 
 int main(int argc, char **argv)
 {
-	int i;
-
-	i = 0;
+	char *str;
 
 	if (argc == 2)
 	{
-		while (argv[1][i] == ' ' || argv[1][i] == '\t') 			
-			i++;
-		while (argv[1][i] != '\0' && argv[1][i] != ' ' && argv[1][i] != '\t')
-			write(1, &argv[1][i++], 1);
+		str = argv[1];
+		while (*str)
+			str++;
+		while (str > argv[1] && *(str - 1) != ' ' && *(str - 1) != '\t')
+			str--;
+		while(*str)
+			write(1, str++, 1);
 	}
 	write(1, "\n", 1);
 	return 0;
@@ -35,77 +36,64 @@ int main(int argc, char **argv)
 ```c
 #include <unistd.h>
 ```
-This header gives access to the POSIX operating system API. In this specific program, it is required solely to use the system call `write()`.
+This header file allows the use of the `write()` system call, which is used here to print the characters directly to the terminal.
 
-### 2. The Main Function Entry Point
-```c
-int main(int argc, char **argv)
-```
-*   `argc` (Argument Count): An integer representing the number of arguments passed via the terminal (including the program name itself).
-*   `argv` (Argument Vector): An array of strings containing the arguments.
-    *   `argv[0]` is the program name (e.g., `./program`).
-    *   `argv[1]` is the first actual text string you pass to the program.
-
-### 3. Initializing the Counter
-```c
-int i;
-i = 0;
-```
-An integer variable `i` is declared and initialized to `0`. It acts as an index pointer to move through the string character by character.
-
-### 4. Input Validation
+### 2. Guarding the Input
 ```c
 if (argc == 2)
 {
+	str = argv[1];
 ```
-This checks if **exactly one** argument was passed to the program. Since the program name counts as the first argument, `argc` must equal `2`. If you pass no arguments or too many arguments, the program skips the logic entirely and safely exits.
+Just like the first program, this condition checks if **exactly one** argument was passed via the terminal (`argc == 2`). If true, the character pointer `str` is initialized to point to the very first character of that input string (`argv[1]`).
 
-### 5. First Loop: Skipping Spaces and Tabs
+### 3. First Loop: Moving to the End
 ```c
-while (argv[1][i] == ' ' || argv[1][i] == '\t') 			
-    i++;
+while (*str)
+	str++;
 ```
-This `while` loop checks the character at the current index `i`. If it is a regular space (`' '`) or a horizontal tab (`'\t'`), the index `i` increments by 1 (`i++`). This effectively "jumps over" all leading whitespace until it hits the first actual letter.
+This loop runs as long as the character `str` points to is not the null-terminator (`'\0'`).
+*   `str++`: Advances the memory pointer forward by one character.
+*   When this loop finishes, `str` points exactly to the hidden `'\0'` marker at the end of the entire string.
 
-### 6. Second Loop: Printing the Word
+### 4. Second Loop: Backtracking to the Word's Start
 ```c
-while (argv[1][i] != '\0' && argv[1][i] != ' ' && argv[1][i] != '\t')
-    write(1, &argv[1][i++], 1);
+while (str > argv[1] && *(str - 1) != ' ' && *(str - 1) != '\t')
+	str--;
 ```
-This loop runs as long as the current character is **not** the end of the string (`'\0'`), **not** a space, and **not** a tab. 
+This loop moves the pointer **backward** to find where the last word begins. It checks the character *just before* the current position (`*(str - 1)`). It keeps moving backward (`str--`) as long as two conditions are met:
+1.  `str > argv[1]`: The pointer has not backed up all the way to the very beginning of the string.
+2.  `*(str - 1) != ' ' && *(str - 1) != '\t'`: The previous character is **not** a space and **not** a tab.
 
-Inside the loop, the `write()` system call outputs the text directly to the screen:
-*   `1`: Specifies the file descriptor for **Standard Output** (the terminal screen).
-*   `&argv[1][i++]`: Passes the memory address of the current character to print, and *then* increments `i` by 1 to move to the next position.
-*   `1`: Instructs the system to print exactly `1` byte (one character).
+The loop stops the exact moment it hits a space, a tab, or the beginning of the string. This means `str` is now pointing to the first letter of the last word.
 
-The loop terminates the moment it hits a space, tab, or the null-terminator.
+### 5. Third Loop: Printing the Last Word
+```c
+while(*str)
+	write(1, str++, 1);
+```
+Now that `str` is perfectly positioned at the start of the last word, this final loop prints it character by character until it hits the end of the string (`'\0'`). 
 
-### 7. Newline and Clean Exit
+### 6. Clean Exit
 ```c
 }
 write(1, "\n", 1);
 return 0;
 ```
-*   `write(1, "\n", 1);`: Prints a newline character. This executes regardless of whether the `if` block ran, ensuring your terminal prompt starts on a clean new line when the program finishes.
-*   `return 0;`: Returns an exit status of 0 to the operating system, signaling that the program executed successfully.
+A newline character (`\n`) is printed to keep the terminal output clean, and the program exits successfully.
 
 ---
 
 ## Step-by-Step Execution Example
 
-If you run the program in your terminal using: `./program "   Hi"`
+Imagine running the program with: `./program "Hello World"`
 
-1.  `argc` is 2, so the program enters the `if` block.
-2.  `i` starts at 0.
-3.  **First Loop:**
-    *   `argv[1][0]` is `' '` $\rightarrow$ `i` becomes 1.
-    *   `argv[1][1]` is `' '` $\rightarrow$ `i` becomes 2.
-    *   `argv[1][2]` is `' '` $\rightarrow$ `i` becomes 3.
-    *   `argv[1][3]` is `'H'` $\rightarrow$ Loop stops.
-4.  **Second Loop:**
-    *   `argv[1][3]` is `'H'` $\rightarrow$ Prints `'H'`, `i` becomes 4.
-    *   `argv[1][4]` is `'i'` $\rightarrow$ Prints `'i'`, `i` becomes 5.
-    *   `argv[1][5]` is `'\0'` $\rightarrow$ Loop stops.
-5.  A newline (`\n`) is printed, and the program exits.
-6.  **Final Output:** `Hi`
+1.  `argc` is 2. `str` starts at `'H'`.
+2.  **First Loop:** `str` advances all the way through "Hello World" and stops at the `'\0'` right after the `'d'`.
+3.  **Second Loop (Backtracking):**
+    *   Looks at `*(str - 1)` $\rightarrow$ It is `'d'` (not a space). Pointer moves back before `'d'`.
+    *   Looks at `*(str - 1)` $\rightarrow$ It is `'l'` (not a space). Pointer moves back before `'l'`.
+    *   *(This repeats for 'r', 'o', 'W')*
+    *   Finally, looks at `*(str - 1)` $\rightarrow$ It hits the space `' '` between "Hello" and "World".
+    *   The loop stops! `str` is now pointing directly at the **`'W'`**.
+4.  **Third Loop:** Prints `'W'`, `'o'`, `'r'`, `'l'`, `'d'` one by one.
+5.  **Final Output:** `World`
