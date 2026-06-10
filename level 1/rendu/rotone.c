@@ -2,19 +2,22 @@
 
 int main(int argc, char **argv)
 {
-	int i = 0;
-
 	if (argc == 2)
 	{
-		while (argv[i])
+		char *s = argv[1];
+		while (*s)
 		{
-			if (argv[i] >= 'A' && argv[i] <= 'Z')
-				argv[i] = (argv[i] - 'A' + 1) % 26 + 'A';
-			else if (argv[i] >= 'a' && argv[i] <= 'z')
-				argv[i] = (argv[i] - 'a' + 1) % 26 + 'a';
-			
-			write(1, &argv[i++], 1);
+			char c = *s;
+			if (c == 'Z')
+				c = 'A';
+			else if (c == 'z')
+				c = 'a';
+			else if ((c >= 'A' && c <= 'Y') || (c >= 'a' && c <= 'y'))
+				c++;
+			write(1, &c, 1);
+			s++;
 		}
 	}
-	return (write(1, "\n", 1), 0);
+	write(1, "\n", 1);
+	return 0;
 }
